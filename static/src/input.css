@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+.active {
+    @apply underline decoration-white underline-offset-8;
+}
+.inactive {
+    @apply hover:text-[#9EF7FF];
+}
+@tailwind utilities;

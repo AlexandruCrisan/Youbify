@@ -1,0 +1,42 @@
+{% extends "_base.html" %} {% block content %}
+<section
+    class="flex flex-row justify-around mx-40 mt-10 mb-32"
+    ref="{refList[0]}"
+    id="s_home">
+    <div
+        class="flex flex-col justify-center gap-10 text-xl text-left font-rubik">
+        <div class="flex flex-col items-end gap-10">
+            <p class="text-6xl font-satisfy w-[800px] text-right">
+                Transfer your favorite
+                <i>playlists</i>
+                with one click
+            </p>
+            <p class="text-slate-400">
+                Carry your music between
+                <span class="shadow shadow-red-400 text-youtube">
+                    Youtube Music
+                </span>
+                <span>&nbspand&nbsp</span>
+                <span class="shadow shadow-green-400 text-spotify">
+                    Spotify
+                </span>
+            </p>
+            <p class="text-slate-400">Secure, simple to use and free</p>
+        </div>
+    </div>
+    <img
+        src="/static/img/youtube_spotify_diagonal.svg"
+        alt=""
+        class="opacity-80 h-[500px] mr-20" />
+</section>
+<section class="h-[800px] bg-red-500 opacity-50" id="s_get_started">
+    Get Started
+</section>
+<section class="h-[800px]" id="s_about">
+    <div class="flex flex-col gap-10"></div>
+</section>
+<section class="h-[800px]" id="s_contact">Contact</section>
+
+<section class="pt-[2000px]">home</section>
+
+{% endblock content %}
