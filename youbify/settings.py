@@ -16,8 +16,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SESSION_COOKIE_SAMESITE = None
-SESSION_COOKIE_DOMAIN = '.example.com'
+# SESSION_COOKIE_SAMESITE = None
+# SESSION_COOKIE_DOMAIN = '.example.com'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

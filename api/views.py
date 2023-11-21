@@ -30,6 +30,10 @@ class AuthURL(APIView):
         # return redirect(url)
         return Response({'url': url}, status=status.HTTP_200_OK)
     
+def spotify_logout(request):
+    request.session["spotify_creds"] = None
+    return redirect('base:home')
+    
 def spotify_callback(request):
     print("REDIRECTED")
     code = request.GET.get('code')
@@ -49,10 +53,20 @@ def spotify_callback(request):
     expires_in = response.get('expires_in')
     error = response.get('error')
     
+    
+    
     if not request.session.session_key:
         request.session.create()
+    print(f"{request.session.session_key=}")
     
-    update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
+    request.session["spotify_creds"] = {
+        "access_token":access_token,
+        "refresh_token": refresh_token,
+        "expires_in": expires_in,
+        "token_type": token_type
+    }
+    
+    # update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
     
     # request.session["is_authenticated"] = True
     
