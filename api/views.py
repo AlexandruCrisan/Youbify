@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from requests import Request, post
+from requests import Request, post, get
 from dotenv import load_dotenv
 from rest_framework.views import APIView
 from rest_framework import status
@@ -27,12 +27,26 @@ class AuthURL(APIView):
             'client_id': os.getenv("CLIENT_ID")
         }).prepare().url
     
-        # return redirect(url)
-        return Response({'url': url}, status=status.HTTP_200_OK)
+
+        # return Response({'url': url}, status=status.HTTP_200_OK)
+        return redirect(url)
     
 def spotify_logout(request):
     request.session["spotify_creds"] = None
     return redirect('base:home')
+
+def get_account_name(token):
+    
+    response = get("https://api.spotify.com/v1/me", headers={
+        "Authorization": f"Bearer {token}"
+    }).json()
+    # print(response.text)
+    # print(response)
+    return response.get('display_name')
+    # return "ok"
+    
+    
+    
     
 def spotify_callback(request):
     print("REDIRECTED")
@@ -53,17 +67,19 @@ def spotify_callback(request):
     expires_in = response.get('expires_in')
     error = response.get('error')
     
-    
+    acc_name = get_account_name(access_token)
     
     if not request.session.session_key:
         request.session.create()
-    print(f"{request.session.session_key=}")
+    # print(f"{request.session.session_key=}")
     
     request.session["spotify_creds"] = {
         "access_token":access_token,
         "refresh_token": refresh_token,
         "expires_in": expires_in,
-        "token_type": token_type
+        "token_type": token_type,
+        "account_name": acc_name
+        
     }
     
     # update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)

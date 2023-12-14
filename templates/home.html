@@ -31,27 +31,26 @@
         class="opacity-80 h-[500px] mr-20" />
 </section>
 <section class="h-[800px] bg-red-500 opacity-50" id="s_get_started">
-    <!-- {%if request.session.is_authenticated%}
-    <a href="">IS LOGGED IN</a>
-    {%endif%} -->
-
     {%if request.session.spotify_creds%}
     <div class="flex flex-col">
-        <a>IS LOGGED IN</a>
-        <a>{{request.session.spotify_creds}}</a>
-        <a href="http://127.0.0.1:8000/api/spotify/logout">Logout</a>
+        <a class="text-3xl text-white">
+            {{request.session.spotify_creds.account_name}} IS LOGGED IN
+        </a>
+        <!-- <a>{{request.session.spotify_creds}}</a> -->
+        <a
+            class="my-4 text-xl text-white"
+            href="http://127.0.0.1:8000/api/spotify/logout">
+            Logout
+        </a>
     </div>
 
-    {%endif%}
-
-    <a href="http://127.0.0.1:8000/api/spotify/get-auth-url">
+    {%else%}
+    <a class="text-3xl" href="http://127.0.0.1:8000/api/spotify/get-auth-url">
         Login with Spotify
     </a>
-    <a class="bg-green-400">{{request.session.is_authenticated}}</a>
+    {%endif%}
 </section>
-<section class="h-[800px]" id="s_about">
-    <div class="flex flex-col gap-10"></div>
-</section>
+<section class="h-[800px]" id="s_about">about</section>
 <section class="h-[800px]" id="s_contact">Contact</section>
 
 <section class="pt-[2000px]">home</section>
