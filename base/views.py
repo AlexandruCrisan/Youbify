@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template import RequestContext
 from requests import get
 import requests
 import axios

@@ -31,8 +31,24 @@ class AuthURL(APIView):
         # return Response({'url': url}, status=status.HTTP_200_OK)
         return redirect(url)
     
+def process_form(request):
+    if request.method == 'POST':
+        # Retrieve the selected choices from the form submission
+        step1_choice = request.POST.get('step1_choice')
+        step2_choice = request.POST.get('step2_choice')
+        step3_choice = request.POST.get('step3_choice')
+
+        # Do something with the selected choices, for example, save them to the database
+        # ...
+
+        # Redirect to a success page or return a JsonResponse
+        return redirect('success_page')
+
+    return render(request, 'home.html')  # Replace 'your_template.html' with the actual template name
+    
 def spotify_logout(request):
     request.session["spotify_creds"] = None
+    request.session["playlists"]["spotify"] = None
     return redirect('base:home')
 
 def get_account_name(token):
@@ -44,6 +60,12 @@ def get_account_name(token):
     # print(response)
     return response.get('display_name')
     # return "ok"
+
+def spotify_get_playlists(token):
+    response = get("https://api.spotify.com/v1/me/playlists", headers={
+        "Authorization": f"Bearer {token}"
+    }).json()
+    return response.get("items")
     
     
     
@@ -68,6 +90,9 @@ def spotify_callback(request):
     error = response.get('error')
     
     acc_name = get_account_name(access_token)
+    acc_playlists = spotify_get_playlists(access_token)
+    
+    # print(acc_playlists)
     
     if not request.session.session_key:
         request.session.create()
@@ -78,19 +103,15 @@ def spotify_callback(request):
         "refresh_token": refresh_token,
         "expires_in": expires_in,
         "token_type": token_type,
-        "account_name": acc_name
-        
+        "account_name": acc_name,
+    }
+    request.session["playlists"] = {
+        "spotify": acc_playlists
     }
     
-    # update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
-    
-    # request.session["is_authenticated"] = True
-    
-    # return render(request, "home.html")
-    # request.session["is_authenticated"] = True
-    # print(request.session["is_authenticated"])
+    # return render(request, 'home.html', {'spotify_playlists': acc_playlists})
     return redirect('base:home')
-    # return render(request, "home.html")
+
 
 class IsAuthenticated(APIView):
     def get(self, request, format=None):

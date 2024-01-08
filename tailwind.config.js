@@ -17,6 +17,9 @@ module.exports = {
             },
             screens: {
                 "3xl": "2000px"
+            },
+            backgroundImage: {
+                spotify_logo: "url('/static/img/spotify_logo.svg')"
             }
         }
     },

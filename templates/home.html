@@ -1,11 +1,7 @@
 {% extends "_base.html" %} {% block content %}
 
-<section
-    class="flex flex-row justify-around mx-40 mt-10 mb-32"
-    ref="{refList[0]}"
-    id="s_home">
-    <div
-        class="flex flex-col justify-center gap-10 text-xl text-left font-rubik">
+<section class="flex flex-row justify-around mx-40 mt-10 mb-32" ref="{refList[0]}" id="s_home">
+    <div class="flex flex-col justify-center gap-10 text-xl text-left font-rubik">
         <div class="flex flex-col items-end gap-10">
             <p class="text-6xl font-satisfy w-[800px] text-right">
                 Transfer your favorite
@@ -25,21 +21,211 @@
             <p class="text-slate-400">Secure, simple to use and free</p>
         </div>
     </div>
-    <img
-        src="/static/img/youtube_spotify_diagonal.svg"
-        alt=""
-        class="opacity-80 h-[500px] mr-20" />
+    <img src="/static/img/youtube_spotify_diagonal.svg" alt="" class="opacity-80 h-[500px] mr-20" />
 </section>
-<section class="h-[800px] bg-red-500 opacity-50" id="s_get_started">
-    {%if request.session.spotify_creds%}
+<hr class="h-1 border-0 opacity-50 bg-slate-500">
+</hr>
+<section class="flex flex-row  justify-around h-[800px]" id="s_get_started">
+    
+    
+    <form action="{% url 'process_form' %}" class="mt-16">
+        <div class="flex flex-col items-center " id="step1">
+            <p class="text-center text-8xl font-satisfy">Step 1</p>
+            <p class="text-xl italic text-center mt-9 text-slate-400">Select the source of your music</p>
+            <div class="flex flex-row flex-shrink-0 mt-20 space-x-5">
+                <button type="button" onclick="next_step(2, 'youtube')" class="flex px-10 py-5 w-96 justify-center disabled:bg-opacity-10 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
+                    <img src="/static/img/youtube_music_logo.svg" class="h-[200px]   opacity-80 ">
+                </button>
+                
+                <button type="button" onclick="next_step(2, 'spotify')" class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]">
+                    <img src="/static/img/spotify_logo.svg" class="h-[200px]  opacity-80 ">
+                </button>
+                
+                <button type="button"  class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f48a1c,0_0_15px_#f48a1c,0_0_30px_#f48a1c]">
+                    <img src="/static/img/musi_logo.svg" class="h-[200px]  opacity-80 ">
+                </button>
+            </div>
+            
+            <!-- <button class="bg-amber-400" type="button" onclick="next_step(2)">Next</button> -->
+            
+        </div>
+        
+        <div class="flex flex-col items-center hidden" id="step2">
+            <p class="text-center text-8xl font-satisfy">Step 2</p>
+            <p class="text-xl italic text-center mt-9 text-slate-400">Select the source of your music</p>
+            <div class="flex flex-row flex-shrink-0 mt-20 space-x-5">
+                
+                <button type="button" onclick="next_step(3, 'youtube')" id="btn_youtube" class=" flex px-10 py-5 w-96 justify-center rounded group bg-opacity-0 bg-slate-500 hover:bg-opacity-10  shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
+                    <img src="/static/img/youtube_music_logo.svg" class="h-[200px]  opacity-80 " id="image_youtube">
+                </button>
+                
+                <button type="button" onclick="next_step(3, 'spotify')" id="btn_spotify" class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]">
+                    <img src="/static/img/spotify_logo.svg" class="h-[200px]  opacity-80 " id="image_spotify">
+                </button>
+                
+                <button type="button" id="btn_musi" class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f48a1c,0_0_15px_#f48a1c,0_0_30px_#f48a1c]">
+                    <img src="/static/img/musi_logo.svg" class="h-[200px]  opacity-80 ">
+                </button>
+            </div>
+            <button class="mt-6 bg-red-400 w-11" type="button" onclick="previous_step(1)">Back</button>
+            
+        </div>
+        <div class="flex flex-col hidden " id="step3">
+            <h2>Step 3</h2>
+            <h3>Choose the playlists</h3>
+            <!-- <div class="flex flex-row space-x-3">
+                <input id="default-checkbox" type="checkbox" >YOUTUBE</input>
+                <input id="default-checkbox" type="checkbox" >SPOTIFY</input>
+            </div> -->
+            
+            {%if request.session.spotify_creds%}
+                <div class="flex flex-col space-y-1">
+                    {%for playlist in request.session.playlists.spotify%}
+                    <div class="flex flex-row text-white hover:bg-slate-500">
+                        <input id="default-checkbox" type="checkbox" >
+                            <p>{{playlist.name}}</p>
+                            <p>{{playlist.tracks.total}}</p>
+                        </input>
+                        
+                    </div>
+                    {%endfor%}
+                    
+                    
+                   
+                    <a class="my-4 text-xl text-white" href="http://127.0.0.1:8000/api/spotify/logout">
+                        Logout
+                    </a>
+                </div>
+
+                {%else%}
+                <a class="text-3xl" href="http://127.0.0.1:8000/api/spotify/get-auth-url">
+                    Login with Spotify
+                </a>
+                {%endif%}
+            
+            
+            
+            
+            <button class="bg-green-400" type="submit">Finish</button>
+            <button class="bg-red-400" type="button" onclick="previous_step(2)"> back</button>
+            
+        </div>
+    </form>
+    
+    <script>
+        let options = {"source": null, "destination": null}
+        
+        function next_step(step, selection) {
+            if (selection)
+                if (step == 2)   
+                    options["source"] =  selection
+                else if (step == 3)
+                    options["destination"] =  selection
+            // Hide current step
+            document.getElementById("step" + (step-1)).classList.add("hidden")
+            // document.querySelector('.step.active').classList.remove('active');
+            
+            // Show next step
+            document.getElementById("step" + step).classList.remove("hidden")
+            
+            console.log(selection)
+            // document.getElementById("btn_" + selection).classList.remove("bg-opacity-0")
+            // document.getElementById("btn_" + selection).classList.add("pointer-events-none")
+            var btn = document.getElementById("btn_" + selection)
+            var img = document.getElementById("image_" + selection)
+            btn.setAttribute("disabled", "")
+            if (selection == "youtube")
+                btn.classList.remove("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]")
+            else btn.classList.remove("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]")
+            btn.classList.add("border-gray-600")
+            btn.classList.add("border-[2px]")
+            btn.classList.remove("hover:bg-opacity-10")
+            img.classList.remove("opacity-80")
+            img.classList.add("opacity-40")
+            // document.querySelector('.step' + step).classList.add('active');
+            console.log(options)
+        }
+        function previous_step(step) {
+            // Hide current step
+            document.getElementById("step" + (step+1)).classList.add("hidden")
+            // document.querySelector('.step.active').classList.remove('active');
+            
+            // Show next step
+            document.getElementById("step" + step).classList.remove("hidden")
+            
+            
+            
+            if(step == 1) {
+                var btn = document.getElementById("btn_" + options.source)
+                var img = document.getElementById("image_" + options.source)
+                btn.removeAttribute("disabled")
+                if (options.source == "youtube")
+                btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]")
+                else btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]")
+                btn.classList.remove("border-gray-600")
+                btn.classList.remove("border-2")
+                btn.classList.add("hover:bg-opacity-10")
+                img.classList.add("opacity-80")
+                img.classList.remove("opacity-40")
+            } else {
+                var btn = document.getElementById("btn_" + options.destination)
+                var img = document.getElementById("image_" + options.destination)
+                btn.removeAttribute("disabled")
+                if (options.destination == "youtube")
+                btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]")
+                else btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]")
+                btn.classList.remove("border-gray-600")
+                btn.classList.remove("border-2")
+                btn.classList.add("hover:bg-opacity-10")
+                img.classList.add("opacity-80")
+                img.classList.remove("opacity-40")
+                
+            }
+            
+            
+            
+            // document.querySelector('.step' + step).classList.add('active');
+        }
+    </script>
+    
+    
+
+    <!-- <div class="flex flex-row py-12">
+        <div class="flex flex-col bg-blue-400">
+
+            
+            <select id="platform"
+                class="outline-none text-lg  text-gray-900 rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ">
+                <option value="SP">
+                    Spotify &nbsp&nbsp🟢
+                </option>
+                <option value="YT">Youtube &nbsp&nbsp🔴</option>
+            </select>
+            
+
+
+
+
+            <hr class="h-1 my-2 border-0 opacity-50 bg-slate-500"/>
+            
+            
+            
+            
+            
+        </div>
+        <div class="">Switch</div>
+        <div class="bg-red-400">Youtube</div>
+    </div> -->
+
+
+
+
+    <!-- {%if request.session.spotify_creds%}
     <div class="flex flex-col">
         <a class="text-3xl text-white">
             {{request.session.spotify_creds.account_name}} IS LOGGED IN
         </a>
-        <!-- <a>{{request.session.spotify_creds}}</a> -->
-        <a
-            class="my-4 text-xl text-white"
-            href="http://127.0.0.1:8000/api/spotify/logout">
+        <a class="my-4 text-xl text-white" href="http://127.0.0.1:8000/api/spotify/logout">
             Logout
         </a>
     </div>
@@ -48,8 +234,10 @@
     <a class="text-3xl" href="http://127.0.0.1:8000/api/spotify/get-auth-url">
         Login with Spotify
     </a>
-    {%endif%}
+    {%endif%} -->
 </section>
+<hr class="h-1 border-0 opacity-50 bg-slate-500">
+</hr>
 <section class="h-[800px]" id="s_about">about</section>
 <section class="h-[800px]" id="s_contact">Contact</section>
 
