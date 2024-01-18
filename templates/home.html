@@ -52,7 +52,7 @@
         
         <div class="flex flex-col items-center hidden" id="step2">
             <p class="text-center text-8xl font-satisfy">Step 2</p>
-            <p class="text-xl italic text-center mt-9 text-slate-400">Select the source of your music</p>
+            <p class="text-xl italic text-center mt-9 text-slate-400">Select the destination</p>
             <div class="flex flex-row flex-shrink-0 mt-20 space-x-5">
                 
                 <button type="button" onclick="next_step(3, 'youtube')" id="btn_youtube" class=" flex px-10 py-5 w-96 justify-center rounded group bg-opacity-0 bg-slate-500 hover:bg-opacity-10  shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
@@ -82,9 +82,11 @@
                 <div class="flex flex-col space-y-1">
                     {%for playlist in request.session.playlists.spotify%}
                     <div class="flex flex-row text-white hover:bg-slate-500">
-                        <input id="default-checkbox" type="checkbox" >
-                            <p>{{playlist.name}}</p>
-                            <p>{{playlist.tracks.total}}</p>
+                        <input id="default-checkbox" type="checkbox"  >
+                            <div class="flex flex-row space-x-9">
+                                <p>{{playlist.name}}</p>
+                                <p>songs: {{playlist.tracks.total}}</p></div>
+                            
                         </input>
                         
                     </div>
