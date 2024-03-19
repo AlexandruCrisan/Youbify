@@ -3,6 +3,7 @@
 
 node_modules
 static/cache
+client_secrets.json
 
 ### Django ###
 *.log

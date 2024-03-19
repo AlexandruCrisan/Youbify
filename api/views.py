@@ -6,15 +6,47 @@ from rest_framework import status
 from rest_framework.response import Response
 from .utils import update_or_create_user_tokens, is_spotify_authenticated
 import os
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 
-
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 
 load_dotenv()
 
 # Create your views here.
+
+class GoogleAuthRedirectView(APIView):
+    def get(self, request):
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'client_secrets.json',
+            scopes=["https://www.googleapis.com/auth/youtube"])
+        flow.redirect_uri = 'http://127.0.0.1:8000/api/youtube/callback'
+        authorization_url, state = flow.authorization_url(access_type='offline')
+        request.session['oauth_state'] = state
+        return redirect(authorization_url)
+
+class GoogleAuthCallbackView(APIView):
+    def get(self, request):
+        state = request.session.pop('oauth_state', None)
+        if state is None or state != request.GET.get('state'):
+            return redirect('login')  # Handle error: state mismatch
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'client_secrets.json',
+            scopes=["https://www.googleapis.com/auth/youtube"])
+        flow.redirect_uri = 'http://127.0.0.1:8000/api/youtube/callback'
+        authorization_response = request.build_absolute_uri()
+        flow.fetch_token(authorization_response=authorization_response)
+        credentials = flow.credentials
+        
+        request["youtube_creds"] = {
+            "access_token": credentials.token
+        }
+        
+        print(credentials.token)
+        # Use credentials to access Google APIs
+        return redirect('/')  # Redirect to home page or wherever you want
 
 class AuthURL(APIView):
     
@@ -111,6 +143,15 @@ def spotify_callback(request):
     
     # return render(request, 'home.html', {'spotify_playlists': acc_playlists})
     return redirect('base:home')
+
+def youtube_login(request):
+    flow = InstalledAppFlow.from_client_secrets_file(
+        "client_secrets.json", scopes=["https://www.googleapis.com/auth/youtube"]
+    )
+    flow.run_local_server(port=1234, prompt="consent")
+    
+    credentials = flow.credentials
+    print(credentials.client_secret)
 
 
 class IsAuthenticated(APIView):
