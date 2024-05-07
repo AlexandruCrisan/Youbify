@@ -1,17 +1,21 @@
-
 <nav
     class="sticky top-0 z-10 flex items-center justify-between h-16 px-10 md:text-xl 3xl:text-3xl font-dm_sans bg-slate-800 bg-opacity-90">
     <div class="flex space-x-10 left-3">
-        <h1 class="text-3xl">
-            <Link href="/">Youbify</Link>
-        </h1>
+        <div id="main_home_btn" class="cursor-pointer">
+            <h1
+                class="inline-block text-3xl font-semibold text-transparent bg-gradient-to-r from-green-500 to-red-500 bg-clip-text">
+                Youbify
+            </h1>
+        </div>
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 var navLinks = document.querySelectorAll("nav ul li a");
-                var navbar = document.querySelector('nav');
+                var navbar = document.querySelector("nav");
+
+                var main_home = document.getElementById("main_home_btn");
 
                 navLinks.forEach(function (link) {
-
                     link.addEventListener("click", function () {
                         event.preventDefault();
                         var targetId = this.getAttribute("href").substring(1); // Remove the "#" symbol
@@ -19,21 +23,27 @@
 
                         if (targetElement) {
                             var offset = navbar.offsetHeight + 40; // Adjust the offset as needed
-                            var targetPosition = targetElement.offsetTop - offset;
+                            var targetPosition =
+                                targetElement.offsetTop - offset;
 
                             window.scrollTo({
                                 top: targetPosition,
                                 behavior: "smooth"
                             });
                         }
-                        // navLinks.forEach(function (navLink) {
-                        //     navLink.classList.remove("active");
-                        //     navLink.classList.add("inactive");
-                        // });
-                        // link.classList.remove("inactive");
-                        // link.classList.add("active");
+                    });
+                });
 
+                main_home.addEventListener("click", function () {
+                    event.preventDefault();
 
+                    var targetElement = document.getElementById("s_home");
+                    var offset = navbar.offsetHeight + 40; // Adjust the offset as needed
+                    var targetPosition = targetElement.offsetTop - offset;
+
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: "smooth"
                     });
                 });
 
@@ -42,7 +52,12 @@
                 window.addEventListener("scroll", () => {
                     sections.forEach((section, index) => {
                         const rect = section.getBoundingClientRect();
-                        if ((rect.top >= window.innerHeight / 2 - 200 && rect.top <= window.innerHeight / 2) || (rect.bottom >= window.innerHeight / 2 && rect.bottom <= window.innerHeight / 2 + 400)) {
+                        if (
+                            (rect.top >= window.innerHeight / 2 - 200 &&
+                                rect.top <= window.innerHeight / 2) ||
+                            (rect.bottom >= window.innerHeight / 2 &&
+                                rect.bottom <= window.innerHeight / 2 + 400)
+                        ) {
                             navLinks.forEach((link) => {
                                 link.classList.remove("active");
                                 link.classList.add("inactive");
@@ -52,22 +67,21 @@
                         }
                     });
                 });
-
             });
         </script>
         <ul class="flex justify-between pl-10 gap-7">
-            <li class="transition duration-250 ">
+            <li class="transition duration-250">
                 <a href="#s_home">Home</a>
             </li>
-            <li class="transition duration-250 ">
+            <li class="transition duration-250">
                 <a href="#s_get_started">Get Started</a>
             </li>
-            <li class="transition duration-250 ">
+            <li class="transition duration-250">
                 <a href="#s_about">About</a>
             </li>
-            <li class="transition duration-250 ">
+            <!-- <li class="transition duration-250">
                 <a href="#s_contact">Contact</a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <!-- <div class="flex items-center gap-10 mr-16">

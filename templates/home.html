@@ -1,7 +1,12 @@
 {% extends "_base.html" %} {% block content %}
 
-<section class="flex flex-row justify-around mx-40 mt-10 mb-32" ref="{refList[0]}" id="s_home">
-    <div class="flex flex-col justify-center gap-10 text-xl text-left font-rubik">
+<!-- HOME SECTION -->
+<section
+    class="flex flex-row justify-around mx-40 mt-10 mb-32"
+    ref="{refList[0]}"
+    id="s_home">
+    <div
+        class="flex flex-col justify-center gap-10 text-xl text-left font-rubik">
         <div class="flex flex-col items-end gap-10">
             <p class="text-6xl font-satisfy w-[800px] text-right">
                 Transfer your favorite
@@ -21,228 +26,553 @@
             <p class="text-slate-400">Secure, simple to use and free</p>
         </div>
     </div>
-    <img src="/static/img/youtube_spotify_diagonal.svg" alt="" class="opacity-80 h-[500px] mr-20" />
+    <img
+        src="/static/img/youtube_spotify_diagonal.svg"
+        alt=""
+        class="opacity-80 h-[500px] mr-20" />
 </section>
-<hr class="h-1 border-0 opacity-50 bg-slate-500">
-</hr>
-<section class="flex flex-row  justify-around h-[800px]" id="s_get_started">
-    
-    
-    <form action="{% url 'process_form' %}" class="mt-16">
-        <div class="flex flex-col items-center " id="step1">
+<!-- END HOME SECTION -->
+
+<!-- <hr class="h-1 border-0 opacity-50 bg-slate-500" /> -->
+
+<!-- GET STARTED SECTION -->
+<section class="flex flex-row justify-around h-[800px]" id="s_get_started">
+    <form class="mt-16" id="main_form">
+        <!-- STEP 1 -->
+        <div class="flex flex-col items-center" id="step1">
             <p class="text-center text-8xl font-satisfy">Step 1</p>
-            <p class="text-xl italic text-center mt-9 text-slate-400">Select the source of your music</p>
+            <p class="text-xl italic text-center mt-9 text-slate-400">
+                Select the source of your music
+            </p>
+
             <div class="flex flex-row flex-shrink-0 mt-20 space-x-5">
-                <button type="button" onclick="next_step(2, 'youtube')" class="flex px-10 py-5 w-96 justify-center disabled:bg-opacity-10 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
-                    <img src="/static/img/youtube_music_logo.svg" class="h-[200px]   opacity-80 ">
+                <button
+                    type="button"
+                    onclick="next_step(2, 'youtube')"
+                    class="flex px-10 py-5 w-96 justify-center disabled:bg-opacity-10 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
+                    <img
+                        src="/static/img/youtube_music_logo.svg"
+                        class="h-[200px] opacity-80" />
                 </button>
-                
-                <button type="button" onclick="next_step(2, 'spotify')" class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]">
-                    <img src="/static/img/spotify_logo.svg" class="h-[200px]  opacity-80 ">
+
+                <button
+                    type="button"
+                    onclick="next_step(2, 'spotify')"
+                    class="flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]">
+                    <img
+                        src="/static/img/spotify_logo.svg"
+                        class="h-[200px] opacity-80" />
                 </button>
-                
-                <button type="button"  class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f48a1c,0_0_15px_#f48a1c,0_0_30px_#f48a1c]">
-                    <img src="/static/img/musi_logo.svg" class="h-[200px]  opacity-80 ">
+
+                <button
+                    type="button"
+                    class="flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f48a1c,0_0_15px_#f48a1c,0_0_30px_#f48a1c]">
+                    <img
+                        src="/static/img/musi_logo.svg"
+                        class="h-[200px] opacity-80" />
                 </button>
             </div>
-            
-            <!-- <button class="bg-amber-400" type="button" onclick="next_step(2)">Next</button> -->
-            
         </div>
-        
+        <!-- END STEP 1 -->
+
+        <!-- STEP 2 -->
         <div class="flex flex-col items-center hidden" id="step2">
             <p class="text-center text-8xl font-satisfy">Step 2</p>
-            <p class="text-xl italic text-center mt-9 text-slate-400">Select the destination</p>
+            <p class="text-xl italic text-center mt-9 text-slate-400">
+                Select the destination
+            </p>
             <div class="flex flex-row flex-shrink-0 mt-20 space-x-5">
-                
-                <button type="button" onclick="next_step(3, 'youtube')" id="btn_youtube" class=" flex px-10 py-5 w-96 justify-center rounded group bg-opacity-0 bg-slate-500 hover:bg-opacity-10  shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
-                    <img src="/static/img/youtube_music_logo.svg" class="h-[200px]  opacity-80 " id="image_youtube">
+                <button
+                    type="button"
+                    onclick="next_step(3, 'youtube')"
+                    id="btn_youtube"
+                    class="flex px-10 py-5 w-96 justify-center rounded group bg-opacity-0 bg-slate-500 hover:bg-opacity-10 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]">
+                    <img
+                        src="/static/img/youtube_music_logo.svg"
+                        class="h-[200px] opacity-80"
+                        id="image_youtube" />
                 </button>
-                
-                <button type="button" onclick="next_step(3, 'spotify')" id="btn_spotify" class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]">
-                    <img src="/static/img/spotify_logo.svg" class="h-[200px]  opacity-80 " id="image_spotify">
+
+                <button
+                    type="button"
+                    onclick="next_step(3, 'spotify')"
+                    id="btn_spotify"
+                    class="flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]">
+                    <img
+                        src="/static/img/spotify_logo.svg"
+                        class="h-[200px] opacity-80"
+                        id="image_spotify" />
                 </button>
-                
-                <button type="button" id="btn_musi" class=" flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f48a1c,0_0_15px_#f48a1c,0_0_30px_#f48a1c]">
-                    <img src="/static/img/musi_logo.svg" class="h-[200px]  opacity-80 ">
+
+                <button
+                    type="button"
+                    id="btn_musi"
+                    class="flex justify-center w-96 px-10 py-5 rounded group bg-slate-500 bg-opacity-0 hover:bg-opacity-10 border-red-400 shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f48a1c,0_0_15px_#f48a1c,0_0_30px_#f48a1c]">
+                    <img
+                        src="/static/img/musi_logo.svg"
+                        class="h-[200px] opacity-80" />
                 </button>
             </div>
-            <button class="mt-6 bg-red-400 w-11" type="button" onclick="previous_step(1)">Back</button>
-            
+            <button
+                class="text-lg relative inline-flex items-center justify-center p-0.5 mt-10 overflow-hidden font-semibold rounded-lg group bg-gradient-to-br from-red-500 to-[#ff7575] group-hover:from-red-500 group-hover:to-red-900 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-[#ff7575]"
+                type="button"
+                onclick="previous_step(1)">
+                <span
+                    class="relative px-5 py-2 transition-all duration-75 ease-in bg-white rounded-md dark:bg-gray-900 group-hover:bg-opacity-0">
+                    Back
+                </span>
+            </button>
         </div>
-        <div class="flex flex-col hidden " id="step3">
-            <h2>Step 3</h2>
-            <h3>Choose the playlists</h3>
-            <!-- <div class="flex flex-row space-x-3">
-                <input id="default-checkbox" type="checkbox" >YOUTUBE</input>
-                <input id="default-checkbox" type="checkbox" >SPOTIFY</input>
-            </div> -->
-            
-            {%if request.session.spotify_creds%}
-                <div class="flex flex-col space-y-1">
-                    {%for playlist in request.session.playlists.spotify%}
-                    <div class="flex flex-row text-white hover:bg-slate-500">
-                        <input id="default-checkbox" type="checkbox"  >
-                            <div class="flex flex-row space-x-9">
-                                <p>{{playlist.name}}</p>
-                                <p>songs: {{playlist.tracks.total}}</p></div>
-                            
-                        </input>
+        <!-- END STEP 2 -->
+
+        <!-- STEP 3 -->
+        <div class="flex flex-col hidden" id="step3">
+            <p class="text-center text-8xl font-satisfy">Step 3</p>
+            <p class="text-xl italic text-center mt-9 text-slate-400">
+                Select the playlists
+            </p>
+
+            <div class="flex flex-row space-x-10 mt-9">
+                <div class="flex-col">
+                    <!-- SPOTIFY BOX -->
+                    
+                    <div id="loading_div" class="invisible absolute flex w-[500px] h-96 justify-center items-center align-middle flex-col bg-black bg-opacity-50" >
+                        <svg aria-hidden="true" id="loading_anim" class="inline w-32 h-32 text-gray-200 animate-spin dark:text-gray-600 fill-green-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                        </svg>
+                        <div class="flex justify-center">
+                            <p id="loading_text" class=" text-spotify font-rubik mt-7 text-lg font-semibold">Loading...</p>
+                        
+                            <p id="done_text" class="invisible absolute text-spotify font-rubik mt-7 text-xl font-semibold">DONE !</p>
+                        </div>
                         
                     </div>
-                    {%endfor%}
+                        
                     
                     
+                    <div id="playlist_main_div" class="flex flex-col w-[500px] h-96 rounded-lg font-rubik bg-black bg-opacity-50 overflow-y-auto justify-center">
+                    {%if request.session.spotify_creds%}
+                        <div class="flex flex-col ml-1 h-96" >
+                            {%for playlist in request.session.playlists.spotify%}
+                            <label for="{{playlist.name}}" id="for {{playlist.name}}" class="flex transition-colors duration-300 ease-in-out flex-row cursor-pointer text-white font-rubik rounded-md  active:bg-[#437943] ">
+                                <input
+                                name="item_checkbox"
+                                type="checkbox"
+                                value="{{playlist.id}}"
+                                id="{{playlist.name}}"
+                                class="invisible"
+                                />
+                                
+                                <div class="cursor-pointer flex flex-row items-center justify-between w-full h-32  mr-6">
+                                    <img class="h-20 cursor-pointer" src="{{playlist.images.0.url}}" ></img>
+                                    <label class=" cursor-pointer font-medium text-xl overflow-hidden text-ellipsis w-[250px]  " for="{{playlist.name}}">{{playlist.name}}</label>
+                                    <label class=" cursor-pointer  text-gray-400 " for="{{playlist.name}}">songs: {{playlist.tracks.total}}</label>
+                                </div>
+                            </label>
+                        {%endfor%}
+                        </div>
+                        
+                        <!-- <button class="bg-green-400" type="submit">Finish</button> -->
+                    
+                                        
+                    
+
+                    {%else%}
+                    
+                    <div
+                        class="flex items-center justify-center w-full h-12 text-3xl text-center bg-black bg-opacity-50 text-spotify"
+                        >
+                        <a class="font-medium font-rubik" href="http://127.0.0.1:8000/api/spotify/get-auth-url">Login with Spotify</a>
+                    </div>
+                    
+                
                    
-                    <a class="my-4 text-xl text-white" href="http://127.0.0.1:8000/api/spotify/logout">
+                    {%endif%}
+                    
+                    
+                    </div>
+                
+                {%if request.session.spotify_creds%}
+                <div class="flex flex-row items-center justify-center font-rubik">
+                    <a class="text-white">
+                        Connected as 
+                        <span class="text-spotify">
+                            {{request.session.spotify_creds.account_name}} 
+                        </span>
+                    </a>
+                    
+                    <a class="ml-5 text-center text-white "
+                    href="http://127.0.0.1:8000/api/spotify/logout">
                         Logout
                     </a>
                 </div>
-
-                {%else%}
-                <a class="text-3xl" href="http://127.0.0.1:8000/api/spotify/get-auth-url">
-                    Login with Spotify
-                </a>
                 {%endif%}
-            
-            
-            
-            
-            <button class="bg-green-400" type="submit">Finish</button>
-            <button class="bg-red-400" type="button" onclick="previous_step(2)"> back</button>
-            
+                </div>
+                
+                
+                <!-- YOUTUBE BOX -->
+                <div
+                    class="flex flex-col w-[500px] h-96 rounded-lg bg-black bg-opacity-50 overflow-y-auto items-center justify-center">
+                
+                {%if request.session.youtube_creds%}
+                
+                    <div class="mt-5 checkmark-wrapper">
+                        <span class="checkmark"></span>
+                    </div>
+                    
+                    <div class="flex flex-col items-center justify-center mt-4 font-rubik">
+                        <a class="text-white">
+                            Connected as 
+                            <span class="text-red-500">
+                                {{request.session.youtube_acc_name}} 
+                            </span>
+                        </a>
+                        
+                        <a class="mt-3 text-xl text-center text-white "
+                        href="http://127.0.0.1:8000/api/youtube/logout">
+                            Logout
+                        </a>
+                    </div>
+                    
+                {%else%}
+                    <div
+                        class="flex items-center justify-center w-full h-12 text-3xl text-center bg-black bg-opacity-50 text-youtube"
+                        >
+                        <a class="font-medium font-rubik" href="http://127.0.0.1:8000/api/youtube/get-auth-url">Login with Youtube</a>
+                    </div>
+                {%endif%}
+                
+                </div>
+                
+                
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-row items-center justify-center space-x-3">
+                <button
+                    class="text-lg relative inline-flex items-center justify-center p-0.5 mt-10 overflow-hidden font-semibold rounded-lg {%if request.session.youtube_creds and request.session.spotify_creds %}group{%endif%}  bg-gradient-to-br from-green-500 to-[#48b932] group-hover:from-red-500 group-hover:to-red-900 hover:text-white dark:text-white active:focus:ring-4 focus:outline-none active:focus:ring-purple-200 active:dark:focus:ring-[#48b932] disabled:opacity-50"
+                    type="submit"
+                    {%if not request.session.youtube_creds or not request.session.spotify_creds %}disabled="true"{%endif%}
+                    >
+                    <span
+                        class="relative px-5 py-2 transition-all duration-75 ease-in bg-white rounded-md dark:bg-gray-900 group-hover:bg-opacity-0">
+                        Finish
+                    </span>
+                </button>
+
+                <button
+                    class="text-lg relative inline-flex items-center justify-center p-0.5 mt-10 overflow-hidden font-semibold rounded-lg group bg-gradient-to-br from-red-500 to-[#b43535] group-hover:from-red-500 group-hover:to-red-900 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-[#ff7575]"
+                    type="button"
+                    onclick="previous_step(2)">
+                    <span
+                        class="relative px-5 py-2 transition-all duration-75 ease-in bg-white rounded-md dark:bg-gray-900 group-hover:bg-opacity-0">
+                        Back
+                    </span>
+                </button>
+            </div>
+            <!----------------->
         </div>
+        <!-- END STEP 3 -->
     </form>
-    
+
     <script>
-        let options = {"source": null, "destination": null}
-        
-        function next_step(step, selection) {
-            if (selection)
-                if (step == 2)   
-                    options["source"] =  selection
-                else if (step == 3)
-                    options["destination"] =  selection
-            // Hide current step
-            document.getElementById("step" + (step-1)).classList.add("hidden")
-            // document.querySelector('.step.active').classList.remove('active');
-            
-            // Show next step
-            document.getElementById("step" + step).classList.remove("hidden")
-            
-            console.log(selection)
-            // document.getElementById("btn_" + selection).classList.remove("bg-opacity-0")
-            // document.getElementById("btn_" + selection).classList.add("pointer-events-none")
-            var btn = document.getElementById("btn_" + selection)
-            var img = document.getElementById("image_" + selection)
-            btn.setAttribute("disabled", "")
+        let options = { source: null, destination: null };
+
+        function hide_step(step) {
+            document.getElementById("step" + step).classList.add("hidden");
+        }
+
+        function show_step(step) {
+            document.getElementById("step" + step).classList.remove("hidden");
+        }
+
+        function add_button_border(btn) {
+            btn.classList.add("border-gray-600");
+            btn.classList.add("border-[2px]");
+        }
+
+        function remove_button_border(btn) {
+            btn.classList.remove("border-gray-600");
+            btn.classList.remove("border-[2px]");
+        }
+
+        function add_button_active_effects(btn, img) {
+            btn.classList.add("hover:bg-opacity-10");
+            img.classList.add("opacity-80");
+            img.classList.remove("opacity-40");
+        }
+
+        function remove_button_active_effects(btn, img) {
+            btn.classList.remove("hover:bg-opacity-10");
+            img.classList.remove("opacity-80");
+            img.classList.add("opacity-40");
+        }
+
+        function disable_selection(selection) {
+            var btn = document.getElementById("btn_" + selection);
+            var img = document.getElementById("image_" + selection);
+            btn.setAttribute("disabled", "");
+
             if (selection == "youtube")
-                btn.classList.remove("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]")
-            else btn.classList.remove("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]")
-            btn.classList.add("border-gray-600")
-            btn.classList.add("border-[2px]")
-            btn.classList.remove("hover:bg-opacity-10")
-            img.classList.remove("opacity-80")
-            img.classList.add("opacity-40")
-            // document.querySelector('.step' + step).classList.add('active');
-            console.log(options)
+                btn.classList.remove(
+                    "shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]"
+                );
+            else
+                btn.classList.remove(
+                    "shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]"
+                );
+
+            add_button_border(btn);
+            remove_button_active_effects(btn, img);
+        }
+
+        function enable_selection(selection) {
+            var btn = document.getElementById("btn_" + selection);
+            var img = document.getElementById("image_" + selection);
+            console.log("DSIABLE " + selection);
+            btn.removeAttribute("disabled");
+
+            if (selection == "youtube")
+                btn.classList.add(
+                    "shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]"
+                );
+            else
+                btn.classList.add(
+                    "shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]"
+                );
+
+            remove_button_border(btn);
+            add_button_active_effects(btn, img);
+        }
+
+        function next_step(step, selection) {
+            if (selection && step == 2) options["source"] = selection;
+            sessionStorage.setItem("source", selection);
+            if (selection && step == 3) options["destination"] = selection;
+            sessionStorage.setItem("destination", selection);
+
+            hide_step(step - 1);
+            show_step(step);
+
+            sessionStorage.setItem("currentStep", step);
+            disable_selection(selection);
         }
         function previous_step(step) {
             // Hide current step
-            document.getElementById("step" + (step+1)).classList.add("hidden")
-            // document.querySelector('.step.active').classList.remove('active');
-            
-            // Show next step
-            document.getElementById("step" + step).classList.remove("hidden")
-            
-            
-            
-            if(step == 1) {
-                var btn = document.getElementById("btn_" + options.source)
-                var img = document.getElementById("image_" + options.source)
-                btn.removeAttribute("disabled")
-                if (options.source == "youtube")
-                btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]")
-                else btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]")
-                btn.classList.remove("border-gray-600")
-                btn.classList.remove("border-2")
-                btn.classList.add("hover:bg-opacity-10")
-                img.classList.add("opacity-80")
-                img.classList.remove("opacity-40")
+            // document.getElementById("step" + (step+1)).classList.add("hidden")
+
+            hide_step(step + 1);
+            show_step(step);
+
+            if (step == 1) {
+                console.log("back 1");
+                enable_selection(options.source);
+                // enable_selection(options.destination)
             } else {
-                var btn = document.getElementById("btn_" + options.destination)
-                var img = document.getElementById("image_" + options.destination)
-                btn.removeAttribute("disabled")
-                if (options.destination == "youtube")
-                btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#f43,0_0_15px_#f43,0_0_30px_#f43]")
-                else btn.classList.add("shadow-[0_0_2px_#fff,inset_0_0_2px_#fff,0_0_5px_#5dea1f,0_0_15px_#5dea1f,0_0_30px_#5dea1f]")
-                btn.classList.remove("border-gray-600")
-                btn.classList.remove("border-2")
-                btn.classList.add("hover:bg-opacity-10")
-                img.classList.add("opacity-80")
-                img.classList.remove("opacity-40")
-                
+                console.log("back2");
+                enable_selection(options.destination);
+                disable_selection(options.source);
             }
-            
-            
-            
-            // document.querySelector('.step' + step).classList.add('active');
+
+            sessionStorage.setItem("currentStep", step);
         }
+
+        function restoreStep() {
+            const storedStep = sessionStorage.getItem("currentStep");
+            console.log(`restore ${storedStep} with ${options["source"]}`);
+            options["source"] = sessionStorage.getItem("source");
+            options["destination"] = sessionStorage.getItem("destination");
+
+            if (storedStep == 2) next_step(storedStep, options["source"]);
+            else if (storedStep == 3) {
+                next_step(storedStep - 1, options["source"]);
+                next_step(storedStep, options["destination"]);
+            }
+        }
+        window.onload = function () {
+            restoreStep();
+        };
+        
+        
+        var checkboxes = document.querySelectorAll("input[type=checkbox][name=item_checkbox]");
+        
+        
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                if(checkbox.checked == true) {
+                    var label = document.getElementById(`for ${checkbox.id}`);
+                // console.log(label)
+                    label.classList.add(
+                    "bg-green-800"
+                    );
+                } else {
+                    var label = document.getElementById(`for ${checkbox.id}`);
+                // console.log(label)
+                    label.classList.remove(
+                    "bg-green-800"
+                    );
+                    
+                }
+             })
+        });
+        
+        
+        function display_loading_animation() {
+            var loading_div = document.getElementById("loading_div")
+            var main_playlist = document.getElementById("playlist_main_div")
+            
+            main_playlist.classList.add("invisible")
+            loading_div.classList.remove("invisible")
+        }
+        
+        function display_done_message() {
+            var done_text = document.getElementById("done_text")
+            var loading_text = document.getElementById("loading_text")
+            
+            var loading_anim = document.getElementById("loading_anim")
+            
+            loading_anim.classList.add("invisible")
+            
+            loading_text.classList.add("invisible")
+            done_text.classList.remove("invisible")
+        }
+        
+        function undo_loading_animation() {
+            var loading_div = document.getElementById("loading_div")
+            var main_playlist = document.getElementById("playlist_main_div")
+            var done_text = document.getElementById("done_text")
+            var loading_text = document.getElementById("loading_text")
+            var loading_anim = document.getElementById("loading_anim")
+            
+            
+            
+            loading_div.classList.add("invisible")
+            main_playlist.classList.remove("invisible")
+            loading_text.classList.remove("invisible")
+            done_text.classList.add("invisible")
+            loading_anim.classList.remove("invisible")
+            
+        }
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var scrollpos = localStorage.getItem("scrollpos");
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+        
+        // const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        document
+            .getElementById("main_form")
+            .addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the default form submission
+                // console.log("TRANSFER");
+                // Get all checked checkboxes
+                var checkboxes = document.querySelectorAll(
+                    'input[name="item_checkbox"]:checked'
+                );
+                var checkedValues = [];
+                checkboxes.forEach(function (checkbox) {
+                    checkedValues.push({
+                        id: checkbox.value,
+                        name: checkbox.id
+                    });
+                });
+                
+                console.log(checkedValues.length)
+                
+                if(checkedValues.length == 0)
+                    return;
+                // console.log(`${checkedValues}`)
+                // Send the data to your API using AJAX
+                
+                display_loading_animation();
+                
+                fetch("http://127.0.0.1:8000/api/transfer", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ checked_items: checkedValues })
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            console.log("Data sent successfully");
+                            display_done_message();
+                            sleep(1000).then(() => {
+                                undo_loading_animation();
+                            })
+                            
+                        } else {
+                            console.error("Failed to send data");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            });
+
+        window.onbeforeunload = function (e) {
+            localStorage.setItem("scrollpos", window.scrollY);
+        };
     </script>
-    
-    
-
-    <!-- <div class="flex flex-row py-12">
-        <div class="flex flex-col bg-blue-400">
-
-            
-            <select id="platform"
-                class="outline-none text-lg  text-gray-900 rounded-lg  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white ">
-                <option value="SP">
-                    Spotify &nbsp&nbsp🟢
-                </option>
-                <option value="YT">Youtube &nbsp&nbsp🔴</option>
-            </select>
-            
-
-
-
-
-            <hr class="h-1 my-2 border-0 opacity-50 bg-slate-500"/>
-            
-            
-            
-            
-            
-        </div>
-        <div class="">Switch</div>
-        <div class="bg-red-400">Youtube</div>
-    </div> -->
-
-
-
-
-    <!-- {%if request.session.spotify_creds%}
-    <div class="flex flex-col">
-        <a class="text-3xl text-white">
-            {{request.session.spotify_creds.account_name}} IS LOGGED IN
-        </a>
-        <a class="my-4 text-xl text-white" href="http://127.0.0.1:8000/api/spotify/logout">
-            Logout
-        </a>
-    </div>
-
-    {%else%}
-    <a class="text-3xl" href="http://127.0.0.1:8000/api/spotify/get-auth-url">
-        Login with Spotify
-    </a>
-    {%endif%} -->
 </section>
-<hr class="h-1 border-0 opacity-50 bg-slate-500">
-</hr>
-<section class="h-[800px]" id="s_about">about</section>
-<section class="h-[800px]" id="s_contact">Contact</section>
+<!-- END GET STARTED SECTION -->
 
-<section class="pt-[2000px]">home</section>
+<!-- <hr class="h-1 border-0 opacity-50 bg-slate-500" /> -->
+
+<section class="h-[800px] flex flex-col  mt-10" id="s_about">
+    <h1 class="text-8xl font-satisfy w-full text-center">About</h1>
+    <div class="flex flex-col items-start gap-10 text-xl ml-80 text-left font-rubik mt-20">
+        
+        
+        <div class="flex flex-row justify-around -ml-36">
+            <div class="flex flex-col border-green-800 border-4 w-1/3 p-6">
+                <p class="text-2xl font-bold text-red-700 italic">
+                    What is Youbify?
+                </p>
+                <p class="text-lg ml-5 mt-3 ">
+                    Youbify is a SPA (Single Page Application) designed to help it's users
+                    transfer their playlists across multiple music streaming services.
+                </p>
+            </div>
+            
+            <div class="flex flex-col border-green-800 border-4 w-1/3 p-6">
+                <p class="text-2xl font-bold text-red-700 italic">
+                    How does it work?
+                </p>
+                <p class="text-lg ml-5 mt-3 ">
+                    After you log in with your desired services, you will be able
+                    to select the playlists you want to transfer.
+                </p>
+            </div>   
+        </div>
+        
+        <div class="flex flex-col border-green-800 border-4 w-1/2 p-6 mt-32 ml-32">
+            <p class="text-2xl font-bold text-red-700 italic">
+                What technology was used?
+            </p>
+            <p class="text-lg ml-5 mt-3 ">
+                This project was entirely built on Django and it's template engine.
+            </p>
+            <p class="text-lg ml-5 mt-3 ">
+                For the frontend, Tailwind and JavaScript came in useful when designing 
+                an interactive experience for the user.
+            </p>
+        </div>
+        
+        
+        
+
+        
+    </div>
+</section>
+<!-- <section class="h-[800px]" id="s_contact">Contact</section> -->
+
+<!-- <section class="pt-[2000px]">home</section> -->
 
 {% endblock content %}

@@ -1,12 +1,15 @@
 from django.urls import path
-from .views import AuthURL, spotify_callback, IsAuthenticated, spotify_logout, process_form, youtube_login, GoogleAuthCallbackView, GoogleAuthRedirectView
+from .views import AuthURL,transfer, spotify_callback, youtube_callback, youtube_logout, spotify_logout,youtube_login, GoogleAuthRedirectView
 
 urlpatterns = [
     path('spotify/get-auth-url', AuthURL.as_view()),
     path('spotify/redirect', spotify_callback),
     path('spotify/logout', spotify_logout),
-    path('spotify/is-authenticated', IsAuthenticated.as_view()),
-    path('process-form/', process_form, name='process_form'),
-    path('youtube/prompt', GoogleAuthRedirectView.as_view()),  
-    path('youtube/callback', GoogleAuthCallbackView.as_view())
+    # path('spotify/is-authenticated', IsAuthenticated.as_view()),
+    # path('process-form/', process_form, name='process_form'),
+    path('youtube/get-auth-url', GoogleAuthRedirectView.as_view()),  
+    path('youtube/redirect', youtube_callback),
+    path('youtube/logout', youtube_logout),
+    
+    path('transfer', transfer)
 ]
