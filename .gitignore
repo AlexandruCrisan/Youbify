@@ -4,8 +4,11 @@
 node_modules
 static/cache
 client_secrets.json
+client_secrets2.json
 
 *.idea
+
+backup_creds/
 
 ### Django ###
 *.log
