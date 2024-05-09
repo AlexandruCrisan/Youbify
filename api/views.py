@@ -32,10 +32,7 @@ class GoogleAuthRedirectView(APIView):
         return redirect(authorization_url)
 
 @csrf_exempt  
-def transfer(request):
-    # time.sleep(2)
-    # return redirect('base:home')
-    
+def transfer(request): 
     cred = Credentials(**request.session["youtube_creds"])
     data = json.loads(request.body)
     playlists_to_transfer = data.get('checked_items', [])
@@ -52,21 +49,19 @@ def transfer(request):
 def youtube_callback(request):
     state = request.session.pop('oauth_state', None)
     if state is None or request.GET.get('state') != state:
-        return redirect('login')  # Handle error: state mismatch
+        return redirect('login')  
     flow = InstalledAppFlow.from_client_secrets_file(
         'client_secrets.json',
         scopes=["https://www.googleapis.com/auth/youtube"])
+    
     flow.redirect_uri = os.getenv("YOUTUBE_REDIRECT_URI")
     authorization_response = request.build_absolute_uri()
+    
     flow.fetch_token(authorization_response=authorization_response)
     credentials = flow.credentials
 
     if not request.session.session_key:
         request.session.create()
-
-    # request.session["youtube_creds"] = {
-    #     "access_token": credentials.token
-    # }
 
     request.session["youtube_creds"] = {
         'token': credentials.token,
@@ -79,13 +74,10 @@ def youtube_callback(request):
     
     request.session["youtube_acc_name"] = str(ut.get_youtube_current_channel_name(credentials))
     
-    # print(credentials.token)
-    # Use credentials to access Google APIs
-    return redirect('base:home')  # R
+    return redirect('base:home')
 
 
 class AuthURL(APIView):
-
     def get(self, request):
         scopes = 'playlist-read-private'
         url = Request('GET', 'https://accounts.spotify.com/authorize', params={
@@ -95,7 +87,6 @@ class AuthURL(APIView):
             'client_id': os.getenv("CLIENT_ID")
         }).prepare().url
 
-        # return Response({'url': url}, status=status.HTTP_200_OK)
         return redirect(url)
 
 
@@ -115,10 +106,7 @@ def get_spotify_account_name(token):
     response = get("https://api.spotify.com/v1/me", headers={
         "Authorization": f"Bearer {token}"
     }).json()
-    # print(response.text)
-    # print(response)
     return response.get('display_name')
-    # return "ok"
 
 
 def spotify_get_playlists(token):
@@ -129,7 +117,6 @@ def spotify_get_playlists(token):
 
 
 def spotify_callback(request):
-    print("REDIRECTED")
     code = request.GET.get('code')
     error = request.GET.get('error')
 
@@ -140,7 +127,6 @@ def spotify_callback(request):
         'client_id': os.getenv("CLIENT_ID"),
         'client_secret': os.getenv("CLIENT_SECRET")
     }).json()
-    print(response)
     access_token = response.get('access_token')
     token_type = response.get('token_type')
     refresh_token = response.get('refresh_token')
@@ -150,11 +136,8 @@ def spotify_callback(request):
     acc_name = get_spotify_account_name(access_token)
     acc_playlists = spotify_get_playlists(access_token)
 
-    # print(acc_playlists)
-
     if not request.session.session_key:
         request.session.create()
-    # print(f"{request.session.session_key=}")
 
     request.session["spotify_creds"] = {
         "access_token": access_token,
@@ -166,10 +149,7 @@ def spotify_callback(request):
     request.session["playlists"] = {
         "spotify": acc_playlists
     }
-    # print(acc_playlists)
-    # print(acc_playlists)
-
-    # return render(request, 'home.html', {'spotify_playlists': acc_playlists})
+    
     return redirect('base:home')
 
 
@@ -181,17 +161,3 @@ def youtube_login(request):
 
     credentials = flow.credentials
     print(credentials.client_secret)
-
-
-# class IsAuthenticated(APIView):
-#     def get(self, request, format=None):
-#         # self.request.session.save()
-#         # if not request.session.session_key:
-#         #     request.session.save()
-#         # print(f"{request.data.get('session_key')=}")
-#         # print(cookies)
-#         # print(f"SESSION ID: {self.request.session.session_key=}")
-#         is_authenticated = is_spotify_authenticated(request.data.get('session_key'))
-#         return Response({'is_authenticated': is_authenticated}, status=status.HTTP_200_OK)
-
-# AQBxToEjvloixwiaV1nGsuSVulvis9wAdbkOUUXQoIkS2Z2tPZil33yzpD2MyWbw3VneEBw1kcgypSJ-cXXIOcmSpAsz11hgZp9l3sMd15WaaencbT8NO8MR7MW4yoLcVkw
