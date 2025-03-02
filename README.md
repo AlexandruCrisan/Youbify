@@ -1,5 +1,5 @@
 # Youbify 🎵➡️🎥   
-![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green) ![Tailwdincss](https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss)  ![SpotifyAPI](https://img.shields.io/badge/Spotify-1ED760?&style=for-the-badge&logo=spotify&logoColor=white) ![Youtube](https://img.shields.io/badge/Youtube-FF0000)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green) ![Tailwdincss](https://img.shields.io/badge/tailwindcss-0F172A?&logo=tailwindcss)  ![SpotifyAPI](https://img.shields.io/badge/Spotify-1ED760?&style=for-the-badge&logo=spotify&logoColor=white) ![GoogleAPIs](https://img.shields.io/badge/Google_APIs-4285F4?style=for-the-badge&logo=google&logoColor=white) ![Youtube](https://img.shields.io/badge/Youtube-FF0000)
 
 **Youbify** is a web application that allows users to seamlessly transfer their Spotify playlists to YouTube (Music). The app provides a simple and efficient way to migrate playlists without manually searching for each song.
 
